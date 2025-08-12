@@ -28,7 +28,7 @@ const SignUp = () => {
       <div className="w-full max-w-md bg-gray-800 rounded-xl shadow-lg p-8">
         {/* Heading */}
         <h1 className="text-4xl font-bold text-center text-white mb-6">
-          Sign Up <span className="text-blue-500">ChatApp</span>
+          Sign Up <span className="text-blue-500">HelloJi App</span>
         </h1>
 
         {/* Form */}

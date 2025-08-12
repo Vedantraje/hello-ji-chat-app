@@ -17,7 +17,7 @@ const Login = () => {
     <div className="min-h-screen w-full flex items-center justify-center">
       <div className="w-full max-w-md bg-gray-800 rounded-xl shadow-lg p-8">
         <h1 className="text-4xl font-bold text-center text-white mb-6">
-          Login to <span className="text-blue-500">ChatApp</span>
+          Login to <span className="text-blue-500">HelloJi App</span>
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-5">
