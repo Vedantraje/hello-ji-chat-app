@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const useGetConversation = () => {
+const useGetConversations = () => {
   const [loading, setLoading] = useState(false);
   const [conversations, setConversations] = useState([]);
 
@@ -9,7 +9,16 @@ const useGetConversation = () => {
     const getConversations = async () => {
       setLoading(true);
       try {
-        const res = await fetch("/api/users");
+        const res = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/api/users`,
+          {
+            method: "GET",
+            credentials: "include", // <-- important to send cookies
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
         const data = await res.json();
         if (data.error) {
           throw new Error(data.error);
@@ -26,4 +35,4 @@ const useGetConversation = () => {
   return { loading, conversations };
 };
 
-export default useGetConversation;
+export default useGetConversations;

@@ -2,35 +2,59 @@ import React from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import useConversation from "../../zustand/useConversation";
 import { extractTime } from "../../utils/extractTime";
+
 const Message = ({ message }) => {
   const { authUser } = useAuthContext();
   const { selectedConversation } = useConversation();
-  const fromMe = message.senderId === authUser._id;
+
+  const fromMe = message?.senderId === authUser._id;
   const formattedTime = extractTime(message.createdAt);
-  const chatClassName = fromMe ? "chat-end" : "chat-start";
+  const chatClassName = fromMe ? "justify-end" : "justify-start";
   const profilePic = fromMe
     ? authUser.profilePic
     : selectedConversation?.profilePic;
-  const bubbleBgColor = fromMe ? "bg-blue-500" : "";
 
-  const shakeClass = message.shouldShake ? "shake" : "";
+  const bubbleStyles = fromMe
+    ? "bg-blue-500 text-white rounded-br-none"
+    : "bg-gray-200 text-gray-900 rounded-bl-none";
+
+  const shakeClass = message.shouldShake ? "animate-shake" : "";
 
   return (
-    <div className={`chat ${chatClassName}`}>
-      <div className="chat-image avatar">
-        <div className="w-10 rounded-full">
-          <img alt="Tailwind CSS chat bubble component" src={profilePic} />
+    <div className={`flex items-end gap-2 my-2 ${chatClassName}`}>
+      {/* Avatar for other user */}
+      {!fromMe && (
+        <div className="flex-shrink-0">
+          <img
+            src={profilePic}
+            alt="User avatar"
+            className="w-8 h-8 rounded-full object-cover"
+          />
         </div>
-      </div>
+      )}
+
+      {/* Message bubble */}
       <div
-        className={`chat-bubble text-white ${bubbleBgColor} ${shakeClass} pb-2`}
+        className={`max-w-xs px-4 py-2 rounded-2xl ${bubbleStyles} ${shakeClass}`}
       >
-        {message.message}
+        <p className="break-words">{message?.message}</p>
+        <span className="block text-xs text-gray-300 mt-1">
+          {formattedTime}
+        </span>
       </div>
-      <div className="chat-footer opacity-50 text-xs flex gap-1 items-center">
-        {formattedTime}
-      </div>
+
+      {/* Avatar for my messages */}
+      {fromMe && (
+        <div className="flex-shrink-0">
+          <img
+            src={profilePic}
+            alt="My avatar"
+            className="w-8 h-8 rounded-full object-cover"
+          />
+        </div>
+      )}
     </div>
   );
 };
+
 export default Message;
